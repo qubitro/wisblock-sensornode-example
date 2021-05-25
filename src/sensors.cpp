@@ -170,7 +170,7 @@ unsigned populateSensorData(uint8_t *buffer, unsigned len) {
     #ifdef LIS3DH_ACCEL_SENSOR
     buffer[0] ^= ACCL_DATA_MASK;
     // This is a really bad way to do this, its just to demo making an alert if someone moves the device
-    float accel = imu.readFloatAccelX() + imu.readFloatAccelY() + imu.readFloatAccelZ();
+    float accel = abs(imu.readFloatAccelX()) + abs(imu.readFloatAccelY()) + abs(imu.readFloatAccelZ());
     memcpy(&buffer[23], &accel, 4);
     #endif
 
