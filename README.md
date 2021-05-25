@@ -10,8 +10,5 @@ Instructions for using the example as well adding to The Things Stack can be fou
 
 ## TODO WIP
 
-* Add theft detection with accelerometer
 * Add GPS
 * Deep sleep, investigating issues with RAK example
-
-

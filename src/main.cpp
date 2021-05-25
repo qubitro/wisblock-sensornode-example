@@ -22,6 +22,7 @@ static uint32_t count = 0;
 static uint32_t count_fail = 0;
 
 unsigned long long next_transmission = 0;
+bool joined = false;
 
 void setup()
 {
@@ -96,7 +97,7 @@ void loop() {
     
     Radio.IrqProcess();
 
-    if(next_transmission<millis()){
+    if(next_transmission<millis() && joined){
         #ifdef POWERGATE_SENSORS
 		digitalWrite(34, HIGH);
 		initSensors();
@@ -121,6 +122,7 @@ void lorawan_has_joined_handler(void)
 	if (ret == LMH_SUCCESS)
 	{
 		delay(1000);
+		joined = true;
 		//TimerSetValue(&appTimer, LORAWAN_APP_INTERVAL);
 		//TimerStart(&appTimer);
 	}

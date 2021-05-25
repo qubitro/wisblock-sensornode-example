@@ -44,7 +44,7 @@ void critical_error(char *issue) {
 void initSensors() {
     Wire.begin();
     Wire.setClock(400000);
-
+    
         // Battery
     analogReference(AR_INTERNAL_3_0);
 	// Set the resolution to 12-bit (0..4095)
@@ -104,7 +104,7 @@ void initSensors() {
 
     #ifdef LIS3DH_ACCEL_SENSOR
     Serial.print("Initializing accelerometer...");
-    if(imu.begin()){
+    if(imu.begin()==0){
         Serial.println("DONE");
     }else{
         critical_error("Failure communicating with imu");
@@ -169,7 +169,9 @@ unsigned populateSensorData(uint8_t *buffer, unsigned len) {
 
     #ifdef LIS3DH_ACCEL_SENSOR
     buffer[0] ^= ACCL_DATA_MASK;
-
+    // This is a really bad way to do this, its just to demo making an alert if someone moves the device
+    float accel = imu.readFloatAccelX() + imu.readFloatAccelY() + imu.readFloatAccelZ();
+    memcpy(&buffer[23], &accel, 4);
     #endif
 
     return 27;
