@@ -40,6 +40,8 @@
 #define POWERGATE_PIN IO2
 #endif
 
+#define PIN_VBAT WB_A0
+
 #define VBAT_MV_PER_LSB (0.73242188F) // 3.0V ADC range and 12 - bit ADC resolution = 3000mV / 4096
 #define VBAT_DIVIDER (0.4F)			  // 1.5M + 1M voltage divider on VBAT = (1.5M / (1M + 1.5M))
 #define VBAT_DIVIDER_COMP (1.73)	  // (1.403F) // Compensation factor for the VBAT divider
