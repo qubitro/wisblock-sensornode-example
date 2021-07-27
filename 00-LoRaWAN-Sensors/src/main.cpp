@@ -24,6 +24,10 @@ static uint32_t count_fail = 0;
 unsigned long long next_transmission = 0;
 bool joined = false;
 
+#ifndef WIRE_HAS_END
+#error "op"
+#endif
+
 void setup()
 {
 	pinMode(LED_BLUE, OUTPUT);
