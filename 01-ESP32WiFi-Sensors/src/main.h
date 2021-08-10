@@ -28,7 +28,7 @@
 
 #define POLL_TIME 600000
 
-#define USE_SSL 0
+#define USE_SSL 1
 
 #define BUFFER_LEN 1024
 

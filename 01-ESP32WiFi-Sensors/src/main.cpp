@@ -1,6 +1,12 @@
 #include "main.h"
 
-WiFiClient wifiClient;
+#if USE_SSL
+const int port = 8883;
+WiFiClientSecure wifiClient;
+#else
+const int port = 1883;
+WiFiClient wifiClient
+#endif
 
 QubitroMqttClient mqttClient(wifiClient);
 
@@ -10,7 +16,6 @@ char pass[] = "WiFi_PASSWORD";
 char deviceID[] = "PASTE_DEVICE_ID_HERE";
 char deviceToken[] = "PASTE_DEVICE_TOKEN_HERE";
 char host[] = "broker.qubitro.com";
-int port = 1883;
 
 unsigned long next = 0;
 
@@ -37,10 +42,14 @@ void setup() {
   }
   Serial.println("Connected!");
 
+  #if USE_SSL
+  wifiClient.setInsecure();
+  #endif
+
   mqttClient.setId(deviceID);
   mqttClient.setDeviceIdToken(deviceID, deviceToken);
 
-  Serial.println("Connecting to Qubitro...");
+  Serial.print("Connecting to Qubitro...");
 
   if (!mqttClient.connect(host, port)) 
   {
@@ -63,14 +72,13 @@ void loop() {
   if(millis() > next) {
     char buffer[1024];
     next = millis() + 20000;
-    // Change if possible to have a message over 256 characters
-    static char payload[256];
+
     mqttClient.beginMessage(deviceID);
     // Send value
+    Serial.println("Posted: ");
     populateSensorData(buffer);
     Serial.println(buffer);
     mqttClient.print(buffer); 
     mqttClient.endMessage();  
-    Serial.println("Posted!!");
   }
 }
