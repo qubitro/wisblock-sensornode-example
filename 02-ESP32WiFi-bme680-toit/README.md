@@ -1,4 +1,4 @@
-# toit example
+# Qubitro <> Toit Example
 
 Toit is a virtual machine based interpreted language which runs on ESP32 devices and provides support for deploying applications remotely. You can either use the toit cloud service to run this, or use Jaguar which is an open source tool for deployment across a local network.
 
